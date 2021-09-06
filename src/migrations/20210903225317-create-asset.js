@@ -14,10 +14,22 @@ module.exports = {
       created_by_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+          as: 'creatorId',
+        },
       },
       owner_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+          as: 'ownerId',
+        },
       },
       content_type: {
         type: Sequelize.STRING(100),

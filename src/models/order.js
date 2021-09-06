@@ -7,8 +7,27 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate() {
+    static associate(models) {
       // define association here
+      Order.belongsTo(models.Account, {
+        foreignKey: 'maker_id',
+        onDelete: 'CASCADE',
+      });
+
+      Order.belongsTo(models.Account, {
+        foreignKey: 'taker_id',
+        onDelete: 'CASCADE',
+      });
+
+      Order.belongsTo(models.Account, {
+        foreignKey: 'created_by_id',
+        onDelete: 'CASCADE',
+      });
+
+      Order.belongsTo(models.Asset, {
+        foreignKey: 'token_id',
+        onDelete: 'CASCADE',
+      });
     }
   }
   Order.init(

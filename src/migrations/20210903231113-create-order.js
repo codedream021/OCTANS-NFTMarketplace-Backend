@@ -28,14 +28,32 @@ module.exports = {
       maker_id: {
         type: Sequelize.INTEGER,
         defaultValue: null,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+          as: 'makerId',
+        },
       },
       taker_id: {
         type: Sequelize.INTEGER,
         defaultValue: null,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+          as: 'takerId',
+        },
       },
       created_by_id: {
         type: Sequelize.INTEGER,
         defaultValue: null,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Accounts',
+          key: 'id',
+          as: 'creatorId',
+        },
       },
 
       side: {
