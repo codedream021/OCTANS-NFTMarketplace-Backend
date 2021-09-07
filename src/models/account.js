@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Account.hasMany(models.Order, {
         foreignKey: 'created_by_id',
-        as: 'creatorId',
+        as: 'creatorIdOrder',
       });
     }
   }
@@ -94,6 +94,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Account',
+      timestamps: false,
     }
   );
   return Account;
