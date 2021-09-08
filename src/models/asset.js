@@ -160,6 +160,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Asset',
+      timestamps: false,
     }
   );
   return Asset;
