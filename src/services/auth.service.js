@@ -31,7 +31,7 @@ const createAuthToken = async (address, signature) => {
       {
         payload: {
           id: account.id,
-          signerAddress,
+          address: signerAddress,
         },
       },
       config.jwtSecret
