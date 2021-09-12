@@ -1,11 +1,9 @@
-const httpStatus = require('http-status');
-
 const catchAsync = require('../utils/catchAsync');
 const { accountService } = require('../services');
 
 const createAccount = catchAsync(async (req, res) => {
-  await accountService.createAccount(req.body.address);
-  res.sendStatus(httpStatus.CREATED);
+  const account = await accountService.createAccount(req.body.address);
+  res.json({ account });
 });
 
 const getNonce = catchAsync(async (req, res) => {

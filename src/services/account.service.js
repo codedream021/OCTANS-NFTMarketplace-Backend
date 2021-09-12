@@ -5,6 +5,7 @@ const faker = require('faker');
 const ApiError = require('../utils/ApiError');
 const logger = require('../config/logger');
 const helper = require('../utils/helper');
+const { nonceMsg } = require('../utils/contants');
 
 const { Account } = require('../models');
 
@@ -14,11 +15,17 @@ const createAccount = async (address) => {
 
   try {
     const randomuUerName = faker.internet.userName();
+    const nonce = helper.generateNonce(20);
     await Account.create({
       address,
-      nonce: helper.generateNonce(20),
+      nonce,
       username: randomuUerName,
     });
+
+    return {
+      address,
+      nonce,
+    };
   } catch (error) {
     logger.error(error);
     throw new ApiError(httpStatus.CONFLICT, 'Address already registered');
@@ -33,7 +40,8 @@ const getNonceByAddress = async (address) => {
 
   if (!account) throw new ApiError(httpStatus.NOT_FOUND, 'Address not exists');
 
-  return account;
+  const nonce = `${nonceMsg}${account.nonce}`;
+  return { nonce };
 };
 
 module.exports = {

@@ -2,24 +2,32 @@ const httpStatus = require('http-status');
 const { ethers } = require('ethers');
 const jwt = require('jsonwebtoken');
 
+const { Account } = require('../models');
 const ApiError = require('../utils/ApiError');
 const logger = require('../config/logger');
 const config = require('../config/config');
-
-const { fetchUserProfile } = require('./profile.service');
+const { nonceMsg } = require('../utils/contants');
 
 const createAuthToken = async (address, signature) => {
   if (!ethers.utils.isAddress(address))
     throw new ApiError(httpStatus.PRECONDITION_FAILED, 'Address Invalid');
 
   try {
-    const account = await fetchUserProfile(address);
+    const account = await Account.findOne({
+      where: {
+        address,
+      },
+    });
 
-    const msg = `${account.nonce}`;
+    if (!account)
+      throw new ApiError(
+        httpStatus.NOT_FOUND,
+        `No Account exists against address: ${address}`
+      );
+
+    const msg = `${nonceMsg}${account.nonce}`;
+
     const signerAddress = await ethers.utils.verifyMessage(msg, signature);
-    if (signerAddress !== address) {
-      return false;
-    }
 
     if (address.toLowerCase() !== signerAddress.toLowerCase())
       throw new ApiError(
