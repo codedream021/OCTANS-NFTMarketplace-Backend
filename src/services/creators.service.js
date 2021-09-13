@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { Account } = require('../models');
+const { getUserObj } = require('../utils/helper');
 
 const fetchCreatorById = async (id) => {
   const profile = await Account.findOne({
@@ -15,13 +16,18 @@ const fetchCreatorById = async (id) => {
       `No Profile exists against id: ${id}`
     );
 
-  return profile;
+  return getUserObj(profile);
 };
 
 const fetchAllCreators = async (limit, offset) => {
+  const count = await Account.count();
   const creators = await Account.findAll({ offset, limit });
 
-  return creators;
+  return {
+    items: creators.map((creator) => getUserObj(creator)),
+    total_count: count,
+    count: creators.length,
+  };
 };
 
 module.exports = {

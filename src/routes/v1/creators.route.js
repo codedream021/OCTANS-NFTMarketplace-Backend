@@ -5,13 +5,12 @@ const { creatorsValidation } = require('../../validations');
 
 const router = express.Router();
 
+router.route('/').get(creatorsController.getAllCreators);
+
 router
   .route('/:id')
   .get(
     validate(creatorsValidation.getCreatorById),
     creatorsController.getCreatorById
   );
-
-router.route('/').get(creatorsController.getAllCreators);
-
 module.exports = router;

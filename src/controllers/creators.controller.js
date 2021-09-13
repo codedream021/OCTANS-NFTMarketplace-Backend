@@ -7,7 +7,7 @@ const getCreatorById = catchAsync(async (req, res) => {
 });
 
 const getAllCreators = catchAsync(async (req, res) => {
-  const creators = creatorsService.fetchAllCreators(
+  const creators = await creatorsService.fetchAllCreators(
     req.query.limit || 10,
     req.query.offset || 0
   );
