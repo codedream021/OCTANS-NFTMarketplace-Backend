@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const { Account } = require('../models');
-const { ipfsUrl } = require('../utils/contants');
+const { getUserObj } = require('../utils/helper');
 
 const fetchUserProfile = async (address) => {
   const profile = await Account.findOne({
@@ -16,19 +16,7 @@ const fetchUserProfile = async (address) => {
       `No Profile exists against address: ${address}`
     );
 
-  return {
-    address,
-    profile_img_url: `${ipfsUrl}${profile.image_cid}`,
-    is_verified: profile.is_verified,
-    user: {
-      username: profile.username,
-      name: profile.name,
-      cover_url: `${ipfsUrl}${profile.cover_cid}`,
-      bio: profile.bio,
-      custom_url: profile.custom_url,
-      yt_username: profile.yt_username,
-    },
-  };
+  return getUserObj(profile);
 };
 
 const updateUserProfile = async (address, profileBody) => {
@@ -51,19 +39,7 @@ const updateUserProfile = async (address, profileBody) => {
       `Error Updating Profile`
     );
 
-  return {
-    address,
-    profile_img_url: `${ipfsUrl}${profile.image_cid}`,
-    is_verified: profile.is_verified,
-    user: {
-      username: profile.username,
-      name: profile.name,
-      cover_url: `${ipfsUrl}${profile.cover_cid}`,
-      bio: profile.bio,
-      custom_url: profile.custom_url,
-      yt_username: profile.yt_username,
-    },
-  };
+  return getUserObj(profile);
 };
 
 module.exports = {
