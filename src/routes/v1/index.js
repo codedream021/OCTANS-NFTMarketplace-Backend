@@ -7,6 +7,7 @@ const creatorsRoute = require('./creators.route');
 const accountRoute = require('./account.route');
 const authRoute = require('./auth.route');
 const assetRoute = require('./asset.route');
+const spotlightRoute = require('./spotlight.route');
 
 const router = express.Router();
 
@@ -30,6 +31,10 @@ const defaultRoutes = [
   {
     path: '/assets',
     route: assetRoute,
+  },
+  {
+    path: '/spotlight',
+    route: spotlightRoute,
   },
 ];
 
