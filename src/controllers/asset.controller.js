@@ -1,5 +1,7 @@
+const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { assetService } = require('../services');
+const ApiError = require('../utils/ApiError');
 
 const getAssetById = catchAsync(async (req, res) => {
   const asset = await assetService.fetchAssetById(req.params.id);
@@ -28,9 +30,18 @@ const getAssetsByCreator = catchAsync(async (req, res) => {
   res.send(assets);
 });
 
+const uploadAsset = catchAsync(async (req, res) => {
+  if (!req.file)
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Asset file is required.');
+
+  const asset = await assetService.uploadAsset(req.file, req.user.id);
+  res.send(asset);
+});
+
 module.exports = {
   getAssetById,
   getAllAssets,
   getMyAssets,
   getAssetsByCreator,
+  uploadAsset,
 };
