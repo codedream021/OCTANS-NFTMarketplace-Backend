@@ -23,6 +23,11 @@ const envVarsSchema = Joi.object()
     DATABASE_PASSWORD_PROD: Joi.string().required().description('DB password'),
     DATABASE_HOST_PROD: Joi.string().required().description('DB host'),
     JWT_SECRET: Joi.string().required().description('JWT SECRET'),
+    PINATA_API_KEY: Joi.string().required().description('PINATA_API_KEY'),
+    PINATA_API_SECRET: Joi.string().required().description('PINATA_API_SECRET'),
+    PINATA_GATEWAY_URL: Joi.string()
+      .required()
+      .description('PINATA_GATEWAY_URL'),
   })
   .unknown();
 
@@ -38,6 +43,9 @@ module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   jwtSecret: envVars.JWT_SECRET,
+  pinataApiKey: envVars.PINATA_API_KEY,
+  pinataApiSecret: envVars.PINATA_API_SECRET,
+  pinataGatewayUrl: envVars.PINATA_GATEWAY_URL,
   db: {
     development: {
       host: envVars.DATABASE_HOST_DEV,
