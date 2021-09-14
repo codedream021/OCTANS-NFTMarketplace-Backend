@@ -81,28 +81,28 @@ module.exports = (sequelize, DataTypes) => {
 
       root_key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         defaultValue: '',
       },
       key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       preview_key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       thumbnail_key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       encrypted_key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       qr_key: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       cid: {
@@ -111,36 +111,36 @@ module.exports = (sequelize, DataTypes) => {
       },
       preview_cid: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       thumbnail_cid: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       encrypted_cid: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       qr_cid: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       token_cid: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       drm_key: {
         type: DataTypes.STRING(1024),
-        allowNull: false,
+        allowNull: true,
       },
       drm_key_id: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       ek: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       mint_tx_id: {
