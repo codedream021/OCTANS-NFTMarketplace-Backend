@@ -8,7 +8,11 @@ const router = express.Router();
 
 router
   .route('/')
-  .put(auth, validate(profileValidation.updateProfile))
+  .put(
+    auth,
+    validate(profileValidation.updateProfile),
+    profileController.updateProfile
+  )
   .get(auth, profileController.getProfile);
 
 module.exports = router;

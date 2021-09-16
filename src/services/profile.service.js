@@ -27,9 +27,9 @@ const updateUserProfile = async (address, profileBody) => {
     {
       where: {
         address,
-        returning: true,
-        plain: true,
       },
+      returning: true,
+      plain: true,
     }
   );
 
