@@ -38,6 +38,7 @@ const fetchLiveAssets = async (offset, limit) => {
   const count = await Asset.count({
     where: {
       status: 'live',
+      on_sale: true,
     },
   });
   const assets = await Asset.findAll({
@@ -45,6 +46,7 @@ const fetchLiveAssets = async (offset, limit) => {
     limit,
     where: {
       status: 'live',
+      on_sale: true,
     },
   });
 
