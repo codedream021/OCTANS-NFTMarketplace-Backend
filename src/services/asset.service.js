@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const pinataSDK = require('@pinata/sdk');
 const httpStatus = require('http-status');
 const { Readable } = require('stream');
@@ -71,12 +72,51 @@ const uploadAsset = async (assetFile, userId) => {
     const creator = await fetchCreatorById(userId);
     const owner = await getUserObj(creator);
 
-    asset.dataValues.owner = owner;
+    asset.dataValues.owner = { ...owner };
     return asset;
   } catch (error) {
     logger.error(error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
   }
+};
+
+const updateAssetInfo = async (assetBody) => {
+  const {
+    asset_id,
+    yt_video_link,
+    name,
+    desc,
+    on_sale,
+    instant_sale_price,
+    royalty,
+  } = assetBody;
+
+  const asset = await Asset.update(
+    {
+      yt_video_link: yt_video_link || '',
+      name,
+      description: desc,
+      on_sale,
+      instant_sale_price,
+      royalty,
+      status: 'live',
+    },
+    {
+      where: {
+        id: asset_id,
+      },
+      returning: true,
+      plain: true,
+    }
+  );
+
+  if (asset[0] === 0)
+    throw new ApiError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      `Error Updating Asset`
+    );
+
+  return asset[1];
 };
 
 module.exports = {
@@ -85,4 +125,5 @@ module.exports = {
   fetchMyAssets,
   fetchAssetByCreatorId,
   uploadAsset,
+  updateAssetInfo,
 };

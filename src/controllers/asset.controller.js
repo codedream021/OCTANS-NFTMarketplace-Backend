@@ -38,10 +38,16 @@ const uploadAsset = catchAsync(async (req, res) => {
   res.send(asset);
 });
 
+const updateAssetInfo = catchAsync(async (req, res) => {
+  const asset = await assetService.updateAssetInfo(req.body);
+  res.send(asset);
+});
+
 module.exports = {
   getAssetById,
   getAllAssets,
   getMyAssets,
   getAssetsByCreator,
   uploadAsset,
+  updateAssetInfo,
 };

@@ -14,7 +14,10 @@ router
   .route('/:id')
   .get(validate(assetValidation.getAssetById), assetController.getAssetById);
 
-router.route('/').get(assetController.getAllAssets).post();
+router
+  .route('/')
+  .get(assetController.getAllAssets)
+  .post(validate(assetValidation.updateAsset), assetController.updateAssetInfo);
 
 router
   .route('/upload')
