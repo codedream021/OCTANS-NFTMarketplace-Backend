@@ -48,21 +48,9 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: null,
       },
-      custom_url: {
-        type: Sequelize.STRING,
-        defaultValue: null,
-      },
       bio: {
         type: Sequelize.TEXT,
         defaultValue: null,
-      },
-      yt_username: {
-        type: Sequelize.STRING,
-        defaultValue: null,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
       },
     });
   },

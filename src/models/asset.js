@@ -7,160 +7,48 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate() {
       // define association here
-      Asset.belongsTo(models.Account, {
-        foreignKey: 'created_by_id',
-        onDelete: 'CASCADE',
-      });
-
-      Asset.belongsTo(models.Account, {
-        foreignKey: 'owner_id',
-        onDelete: 'CASCADE',
-      });
-
-      Asset.hasMany(models.Order, {
-        foreignKey: 'token_id',
-        as: 'tokenId',
-      });
     }
   }
   Asset.init(
     {
-      created_by_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      owner_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      content_type: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-
-      yt_video_link: {
+      contractAddress: { type: DataTypes.STRING, required: true },
+      tokenID: { type: DataTypes.INTEGER, required: true },
+      tokenURI: { type: DataTypes.STRING, required: true },
+      imageURL: { type: DataTypes.STRING },
+      thumbnailPath: { type: DataTypes.STRING, defaultValue: '-' },
+      symbol: { type: DataTypes.STRING },
+      name: { type: DataTypes.STRING }, // for search filter
+      owner: { type: DataTypes.STRING },
+      supply: { type: DataTypes.INTEGER, defaultValue: 1 },
+      royalty: { type: DataTypes.DECIMAL, defaultValue: 0 },
+      category: [{ type: DataTypes.STRING }],
+      price: { type: DataTypes.DECIMAL, defaultValue: 0 }, // for most expensive in payment token
+      paymentToken: { type: DataTypes.STRING, defaultValue: 'octa' }, // payment erc20 token address
+      priceInUSD: { type: DataTypes.DECIMAL, defaultValue: 0 },
+      lastSalePrice: { type: DataTypes.DECIMAL, defaultValue: 0 }, // for highest last sale price
+      lastSalePricePaymentToken: {
         type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      yt_video_id: {
-        type: DataTypes.STRING(50),
-        defaultValue: null,
-      },
-      status: {
-        type: DataTypes.STRING(50),
-        defaultValue: 'UNKNOWN_STATUS',
-      },
-
-      name: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      description: {
-        type: DataTypes.TEXT,
-        defaultValue: null,
-      },
-      on_sale: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      instant_sale_price: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-      },
-      royalty: {
-        type: DataTypes.INTEGER,
-        defaultValue: 0,
-      },
-
-      contract_address: {
-        type: DataTypes.STRING(100),
-        defaultValue: null,
-      },
-
-      root_key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: '',
-      },
-      key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      preview_key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      thumbnail_key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      encrypted_key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      qr_key: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      cid: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      preview_cid: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      thumbnail_cid: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      encrypted_cid: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      qr_cid: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      token_cid: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      drm_key: {
-        type: DataTypes.STRING(1024),
-        allowNull: true,
-      },
-      drm_key_id: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-      ek: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      mint_tx_id: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-
-      job_id: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      job_status: {
-        type: DataTypes.STRING(50),
-        defaultValue: null,
-      },
+        defaultValue: 'octa',
+      }, // payment erc20 token address
+      lastSalePriceInUSD: { type: DataTypes.DECIMAL, defaultValue: 0 },
+      viewed: { type: DataTypes.INTEGER, defaultValue: 0 }, // for mostly viewed
+      createdAt: { type: DataTypes.DATE }, // for recently created
+      listedAt: { type: DataTypes.DATE }, // for recently listed
+      soldAt: { type: DataTypes.DATE }, // for recently sold
+      saleEndsAt: { type: DataTypes.DATE }, // for auction
+      tokenType: { type: DataTypes.INTEGER, defaultValue: 721 },
+      liked: { type: DataTypes.INTEGER, defaultValue: 0 },
+      contentType: { type: DataTypes.STRING, defaultValue: 'image' },
+      isAppropriate: { type: DataTypes.BOOLEAN, defaultValue: true },
+      isFiltered: { type: DataTypes.BOOLEAN, defaultValue: false },
+      blockNumber: { type: DataTypes.INTEGER, defaultValue: 0 },
     },
     {
       sequelize,
       modelName: 'Asset',
-      timestamps: false,
+      timestamps: true,
     }
   );
   return Asset;
